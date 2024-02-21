@@ -1,5 +1,5 @@
 
-M5StackへWiFi接続すr場合は、スマフォのアプリを使用します。
+M5StackへWiFi接続する場合は、スマフォのアプリを使用します。
 EspTocuhを使用します。
 EspTouchを起動してMainからEspTouchを選び接続先WiFiを指定します。
 M5StackはWiFi2.4GHzなのでスマフォも2.4GHzのWiFiに接続してください。
