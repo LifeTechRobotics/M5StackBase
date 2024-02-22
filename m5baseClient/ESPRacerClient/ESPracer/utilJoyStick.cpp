@@ -245,8 +245,10 @@ extern "C" {
 
 				app->m_LX = joy.lX;
 				app->m_LY = joy.lY;
-				app->m_RX = joy.lZ;
-				app->m_RY = joy.lRz;
+//				app->m_RX = joy.lZ;
+//				app->m_RY = joy.lRz;
+				app->m_RX = joy.lRz;
+				app->m_RY = joy.lZ;
 
 				if (abs(app->m_LX) < 70) {
 					app->m_LX = 0;

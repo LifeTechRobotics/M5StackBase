@@ -245,7 +245,7 @@ UINT ESPClientThread(LPVOID p)
 			else {
 				pAppDlg->m_BtnConfig.EnableWindow(FALSE);
 				pAppDlg->m_BtnConfig.RedrawWindow();
-				pAppDlg->m_EditESPRacerStatus.SetWindowTextW(_T("切断していません"));
+				pAppDlg->m_EditESPRacerStatus.SetWindowTextW(_T("接続していません"));
 				pAppDlg->m_EditESPRacerStatus.RedrawWindow();
 				break;
 			}
@@ -625,7 +625,7 @@ void CESPracerDlg::OnTimer(UINT_PTR nIDEvent)
 					m_iSpeedL = (int)(63 * (double)((double)m_LY / 1000.0));
 				}
 
-				if (m_CheckRevUpDown.GetCheck() == BST_CHECKED) {
+				if (m_CheckRevUpDown.GetCheck() != BST_CHECKED) {
 					m_iSpeedR = -1 * m_iSpeedR;
 					m_iSpeedL = -1 * m_iSpeedL;
 				}
