@@ -67,6 +67,8 @@ bool gDemoMode = false;                       // デモモード
 // ROATE COUNTER
 int gRotateCount = 0;                         // インジケーター回転用
 
+// WiFi Connect Wait COunter
+int gWiFiWaitCounter = 0;
 
 //
 // インジケーター用カウンターの初期化
@@ -373,6 +375,18 @@ void loop() {
     MotorDemo();
   }
 
+  if(WiFi.status() != WL_CONNECTED) {
+    gWiFiWaitCounter ++;
+    if(gWiFiWaitCounter > 10) {
+      // Next
+    }
+    else {
+      delay(500);
+      M5.Lcd.setCursor(0, 0);
+      M5.Lcd.println("WiFi : Searching ...");
+      return;
+    }
+  }
 
 
   if(!gDemoMode && (WiFi.status() == WL_CONNECTED)) {
@@ -894,19 +908,23 @@ void loop() {
   if(gMotorLSpd < MOTOR_SPEED_MIN){
     gMotorLSpd = MOTOR_SPEED_MIN;
   }
-  int spdr = 0;
-  int spdl = 0;
+  unsigned char spdr = 0;
+  unsigned char spdl = 0;
+  
+  //gMotorRSpd = gMotorRSpd * -1;
+  //gMotorLSpd = gMotorLSpd * -1;
+
   if(gMotorRSpd >= 0 && gMotorRSpd <= MOTOR_SPEED_MAX){
-    spdr = gMotorRSpd;
+    spdr = 128 + gMotorRSpd;
   }
   else {
-    spdr = 64 - gMotorRSpd;
+    spdr = 192 - gMotorRSpd;
   }
   if(gMotorLSpd >= 0 && gMotorLSpd <= MOTOR_SPEED_MAX){
-    spdl = 128 + gMotorLSpd;
+    spdl = gMotorLSpd;
   }
   else {
-    spdl = 192 - gMotorLSpd;
+    spdl = 64 - gMotorLSpd;
   }
 
   // 設定速度の表示
@@ -922,7 +940,7 @@ void loop() {
     }
   }
   M5.Lcd.setCursor(0, 32);
-  M5.Lcd.printf("%3d/%3d     ", spdr, spdl);
+  M5.Lcd.printf("%3d/%3d     ", spdl, spdr);
 
   // モータドライバへ送信
   Serial1.write(spdr);
